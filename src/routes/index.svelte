@@ -39,7 +39,32 @@
 			for ( let cat of item.categories ) {
 				if ( cats.indexOf(cat) > -1 ) hasCSSCat = true;
 			}
-			if ( hasCSSCat ) items.push(item);
+			if ( hasCSSCat ) {
+				var yearsCounter = {}
+				for ( let browser in browsers) {
+					// console.log(browsers)
+					for( let version in browser ) {
+						if (item.stats[browser][version] == "y") {
+							// console.log(item.stats[browser][version], browser, version, browsers[browser][version])
+							if ( !yearsCounter.hasOwnProperty(browsers[browser][version])) {
+								yearsCounter[browsers[browser][version]]=0;
+							}
+							yearsCounter[browsers[browser][version]]++;
+						}
+					}
+				}
+				var years = [];
+				for ( let year in yearsCounter) {
+					if ( yearsCounter[year] > 1 ) {
+						years.push(year);
+					}
+				}
+				console.log(item.title,years);
+				console.log(yearsCounter);
+
+				// add to items
+				items.push(item);
+			}
 		}
 	}
 </script>
@@ -48,19 +73,29 @@
 	<title>CSS IV ( Inferred Versions )</title>
 </svelte:head>
 
-<ul>
-	{#each cats as cat, index}
-		<h2>{cat}</h2>
-		<ul>
-			{#each items as item, index}
-				{#if item.categories.indexOf(cat) > -1}
-					<li>{item.title}</li>
-				{/if}
-			{/each}
-		</ul>
-	{/each}
-</ul>
+{#each items as item, index}
+	<div><span class={item.status} title={data.statuses[item.status]}>{item.status}</span> {item.title}</div>
+{/each}
 
 <style>
+	div {
+		margin-bottom: 0.5rem;
+	}
+	
+	.rec,
+	.ietf,
+	.ls{background:#007700}
+	.pr{background:#387700}
+	.cr{background:#777700}
+	.wd{background:#770000}
+	.unoff{background:#777777}
 
+	span {
+		background: #666;
+		color: white;
+		padding:0 1rem;
+		width: 3rem;
+		text-align: center;
+		display: inline-block;
+	}
 </style>
