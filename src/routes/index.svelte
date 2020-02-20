@@ -235,9 +235,8 @@
 	<title>CSS IV ( Inferred Versions )</title>
 </svelte:head>
 
-<h1>CSS IV ( Inferred Versions )</h1>
-
-<a href="about">Explanation</a>
+<h1>CSS IV<br>( Inferred Versions )</h1>
+<p><a rel="prefetch" href="about">Explanation</a></p>
 
 <ul class=statuses>
 	{#each statuses as status, index}
@@ -271,6 +270,9 @@
 </table>
 
 <style>
+	* {
+		text-align: center;
+	}
 	.statuses {
 		display: flex;
 		width: 100%;
