@@ -83,6 +83,14 @@
 			"active": true
 		},
 		{
+			"name":"ietf",
+			"active": true
+		},
+		{
+			"name":"ls",
+			"active": true
+		},
+		{
 			"name":"pr",
 			"active": true
 		},
@@ -95,15 +103,11 @@
 			"active": true
 		},
 		{
-			"name":"ls",
+			"name":"unoff",
 			"active": true
 		},
 		{
 			"name":"other",
-			"active": true
-		},
-		{
-			"name":"unoff",
 			"active": true
 		}
 	];
@@ -154,8 +158,8 @@
 					A != "ietf" && B == "rec" ||
 					A != "ietf" && B == "ietf" ||
 
-					A == "lc" && B == "rec" ||
-					A == "lc" && B == "ietf" ||
+					A == "ls" && B == "rec" ||
+					A == "ls" && B == "ietf" ||
 
 					A == "pr" && B == "rec" ||
 					A == "pr" && B == "ietf" ||
@@ -183,8 +187,8 @@
 					B != "ietf" && A == "rec" ||
 					B != "ietf" && A == "ietf" ||
 
-					B == "lc" && A == "rec" ||
-					B == "lc" && A == "ietf" ||
+					B == "ls" && A == "rec" ||
+					B == "ls" && A == "ietf" ||
 
 					B == "pr" && A == "rec" ||
 					B == "pr" && A == "ietf" ||
@@ -211,6 +215,17 @@
 		selected = type;
 	}
 
+	$: isNotFiltered = function(item) {
+		var showable = false;
+
+		for ( let status of statuses) {
+			if ( status.name == item.status && status.active ) {
+				showable = true;
+			}
+		}
+		return showable;
+	}
+
 	let dir = true;
 
 	let selected = "first";
@@ -219,6 +234,10 @@
 <svelte:head>
 	<title>CSS IV ( Inferred Versions )</title>
 </svelte:head>
+
+<h1>CSS IV ( Inferred Versions )</h1>
+
+<a href="about">Explanation</a>
 
 <ul class=statuses>
 	{#each statuses as status, index}
@@ -241,11 +260,13 @@
 				</tr>
 			{/if}
 		{/if}
+		{#if isNotFiltered(item)}
 		<tr>
 			<td>{item.title}</td>
 			<td>{item.years[0]}</td>
 			<td><span class={item.status} title={data.statuses[item.status]}>{item.status}</span></td>
 		</tr>
+		{/if}
 	{/each}
 </table>
 
@@ -254,16 +275,39 @@
 		display: flex;
 		width: 100%;
 		list-style: none;
-		padding: 0;
+		margin-top: 3rem;
+		padding: 0 0 1rem;
+		border-bottom: 1px solid #eee;
+		margin-bottom: 1rem;
 	}
 	.statuses li {
 		padding: 0;
 		flex: 1;
+		text-align: center;
+	}
+	.statuses button {
+		padding: .5em 1em;
+		border: 1px solid lightblue;
+		border-radius: .5em;
+		min-width: 4em;
+		background: white;
+		color: lightskyblue;
+		cursor: pointer;
+	}
+	.statuses button:hover {
+		border-color: #039ed0;
+	}
+
+	.statuses button.active {
+		color: green;
+		border-color: green;
+		background: lightgreen;
 	}
 
 	table {
 		text-align: center;
 		border-collapse: collapse;
+		width: 100%;
 	}
 	th:first-child,
 	td:first-child {

@@ -3,10 +3,8 @@
 </script>
 
 <nav>
-	<ul>
-		<li><a class:selected='{segment === undefined}' href='.'>CSS IV</a></li>
-		<li><a class:selected='{segment === "about"}' href='about'>About</a></li>
-	</ul>
+	<a class:selected='{segment === undefined}' href='.'>CSS IV</a>
+	<a class:selected='{segment === "about"}' href='about'>What is CSS IV</a>
 </nav>
 
 
@@ -15,43 +13,26 @@
 		border-bottom: 1px solid rgba(255,62,0,0.1);
 		font-weight: 300;
 		padding: 0 1em;
-	}
-
-	ul {
-		margin: 0;
-		padding: 0;
-	}
-
-	/* clearfix */
-	ul::after {
-		content: '';
-		display: block;
-		clear: both;
-	}
-
-	li {
-		display: block;
-		float: left;
+		text-align: center;
 	}
 
 	.selected {
 		position: relative;
-		display: inline-block;
 	}
-
-	.selected::after {
+	.selected:after {
+		content: "";
 		position: absolute;
-		content: '';
-		width: calc(100% - 1em);
-		height: 2px;
-		background-color: rgb(255,62,0);
-		display: block;
-		bottom: -1px;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		background: rgb(255,62,0);
+		height: 5px;
 	}
 
 	a {
 		text-decoration: none;
 		padding: 1em 0.5em;
-		display: block;
+		display: inline;
+		line-height: 3rem;
 	}
 </style>
